@@ -7,7 +7,7 @@ Release:          11.1%{?dist}
 Summary:          Command Line Interface Library for Java
 
 License:          ASL 2.0
-URL:              http://commons.apache.org/cli/
+URL:              https://commons.apache.org/cli/
 Source0:          http://www.apache.org/dist/commons/cli/source/%{short_name}-%{version}-src.tar.gz
 BuildArch:        noarch
 
