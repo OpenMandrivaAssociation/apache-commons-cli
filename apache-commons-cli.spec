@@ -1,87 +1,34 @@
-%{?_javapackages_macros:%_javapackages_macros}
-%global short_name      commons-cli
+Name:           apache-commons-cli
+Version:        1.10.0
+Release:        1
+Summary:        Command Line Interface Library for Java
+License:        Apache-2.0
+URL:            https://commons.apache.org/proper/commons-cli/
+BuildArch:      noarch
 
-Name:             apache-%{short_name}
-Version:          1.2
-Release:          11.1%{?dist}
-Summary:          Command Line Interface Library for Java
+Source0:        https://www.apache.org/dist/commons/cli/source/commons-cli-%{version}-src.tar.gz
 
-License:          ASL 2.0
-URL:              https://commons.apache.org/cli/
-Source0:          http://www.apache.org/dist/commons/cli/source/%{short_name}-%{version}-src.tar.gz
-BuildArch:        noarch
+Patch:          0001-Port-tests-to-commons-lang3.patch
 
-BuildRequires:    java-devel >= 1:1.6.0
-BuildRequires:    jpackage-utils
-BuildRequires:    maven-local
-
-Requires:         java >= 1:1.6.0
-Requires:         jpackage-utils
+BuildRequires:  javapackages-bootstrap
 
 %description
-The CLI library provides a simple and easy to use API for working with the 
+The CLI library provides a simple and easy to use API for working with the
 command line arguments and options.
 
-%package javadoc
-Summary:          Javadoc for %{name}
-
-Requires:         jpackage-utils
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
 %prep
-%setup -q -n %{short_name}-%{version}-src
+%autosetup -p1 -C
 
 # Compatibility links
-%mvn_alias "%{short_name}:%{short_name}" "org.apache.commons:%{short_name}"
-%mvn_file :commons-cli %{short_name} %{name}
+%mvn_alias : org.apache.commons:commons-cli
+%mvn_file : commons-cli %{name}
 
 %build
-%mvn_build
+%mvn_build -j
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt NOTICE.txt README.txt RELEASE-NOTES.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt NOTICE.txt
-
-%changelog
-* Mon Aug 05 2013 Mat Booth <fedora@matbooth.co.uk> - 1.2-11
-- Update for newer guidelines
-- Drop ancient obsoletes/provides on old jakarta name
-
-* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2-10
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
-
-* Tue Feb 19 2013 Mat Booth <fedora@matbooth.co.uk> - 1.2-9
-- Add missing maven-local BuildRequires
-
-* Wed Feb 13 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2-8
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
-
-* Wed Jul 18 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2-7
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
-
-* Thu Jan 12 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2-6
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
-
-* Wed Nov 30 2011 Alexander Kurtakov <akurtako@redhat.com> 1.2-5
-- Build with maven 3.
-- Adapt to current guidelines.
-
-* Mon Feb 07 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.2-4
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
-
-* Tue Nov 9 2010 Chris Spike <chris.spike@arcor.de> 1.2-3
-- Removed maven* BRs in favour of apache-commons-parent
-- Added deprecated groupId to depmap for compatibility reasons
-
-* Mon Oct 18 2010 Chris Spike <chris.spike@arcor.de> 1.2-2
-- Removed Epoch
-
-* Sun Oct 3 2010 Chris Spike <chris.spike@arcor.de> 1.2-1
-- Rename and rebase from jakarta-commons-cli
+%license LICENSE.txt NOTICE.txt
+%doc README.md RELEASE-NOTES.txt
