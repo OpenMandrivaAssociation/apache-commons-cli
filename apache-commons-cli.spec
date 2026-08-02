@@ -1,5 +1,5 @@
 Name:           apache-commons-cli
-Version:        1.10.0
+Version:        1.11.0
 Release:        1
 Summary:        Command Line Interface Library for Java
 License:        Apache-2.0
@@ -17,7 +17,7 @@ The CLI library provides a simple and easy to use API for working with the
 command line arguments and options.
 
 %prep
-%autosetup -p1 -C
+%autosetup -p1 -C -n commons-cli-1.11.0-src
 
 # Compatibility links
 %mvn_alias : org.apache.commons:commons-cli
